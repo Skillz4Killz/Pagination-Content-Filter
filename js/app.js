@@ -4,7 +4,7 @@ let studentsPerPage = 10;
 let studentList = $('.student-list').children(); 
 const CreatePageList = '<div class = "pagination"><ul> </ul></div>';
 const createPage = '<li></li>';
-const createPageLink = '<a href="#"></a>
+const createPageLink = '<a href="#"></a>';
   
 //allow user to decide how many students per page
 function numStudentPage () {
