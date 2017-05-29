@@ -1,54 +1,17 @@
 //create all global variables
-let currentPage = 1;
+const studentList = document.getElementsByClassName('student-item');
+let pageNum = 1;
 let studentsPerPage = 10;
-let studentList = $('.student-list').children(); 
-const CreatePageList = '<div class = "pagination"><ul> </ul></div>';
-const createPage = '<li></li>';
-const createPageLink = '<a href="#"></a>';
-  
-//allow user to decide how many students per page
-function numStudentPage () {
-  studentsPerPage = $('#numStudentsPage').value;
-}
 
 //determine which students should appear on which page using the amount of studentsPerPage and the page clicked by user.
-function showPage (currentPage) {
+function showPage (pageNum, studentList) {
+  $('.student-list').css('display', 'none');
   for (let i = 0; i <= studentList.length; i += 1) {
-    if (i >= currentPage * studentsPerPage && i <= (currentPage * studentsPerPage) + (studentsPerPage - 1)) {
-      studentList[i].show();
-    } else if (i <= currentPage * studentsPerPage) {
-      studentList[i].show();
-    } else {
-      studentList[i].hide();
-    }
+    if (i < pageNum * studentsPerPage && i > (pageNum - 1) * studentsPerPage - 1) {
+      studentList[i].style.display = 'block';
+      console.log(i + ' will show the student');
+    } 
   }
 }
 
-//function to allow page content updates when a user clicks a pagination link
-function editPageLinks () {
-  for (let i = 1; i < maxPages; i += 1) {
-    if (i == currentPage) {
-      createPageLink = '<a href="#" class="active"></a>';
-    }
-    createPageLink.textContent = i;
-    createPage = createPage.append(createPageLink);
-    CreatePageList.childNode.append(createPage);
-  }
-}
-
-//add HTML for page links based on max amount of students.
-function appendPageLinks (studentList) {
-  let maxPages = Math.ceil(studentList.length / studentsPerPage);
-  editPageLinks();
-}
-
-  //call functions
-  showPage(currentPage, studentList);
-  appendPageLinks(studentList);
-
-  //event listener to edit page links with the correct active class on the clicked page.
-  $('.pagination ul li a').click(function editPages () {
-    currentPage = event.target.textContent;
-    editPageLinks();
-  })
-  
+showPage(1, studentList);
