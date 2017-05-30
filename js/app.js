@@ -8,9 +8,8 @@ let studentNames = $('h3');
 let studentEmails = $('.email');
 let matchedStudents = [];
 
-//add search bar and page links div
+//add search bar
 $('h2').after('<div class="student-search"> <input id="search" placeholder="Search for students..."> <button>Search</button> </div>');
-
 
 //determine which students should appear on which page using the amount of studentsPerPage and the page clicked by user.
 function showPage (x, y) {
@@ -42,7 +41,7 @@ function appendPageLinks (x) {
 //search function to search for student and filter all the lists and pagination based on search
 function studentSearch () {
    let search = document.getElementById('search').value.toLowerCase();
-   $('.pagination').empty();
+   $('.pagination').remove();
    document.getElementById('search').value = '';
    for (var i = 0; i < studentList.length; i++) {
      name = studentNames[i].textContent;
@@ -51,7 +50,7 @@ function studentSearch () {
        matchedStudents.push(studentList[i]);
      } 
    }
-   $('div').remove('.pagination');
+   
    console.log(matchedStudents);
    if (matchedStudents.length == 0) {
      $(studentList).hide();
