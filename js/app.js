@@ -25,6 +25,7 @@ function showPage (x, y) {
 function appendPageLinks (x) {
   let totalPages = Math.ceil(x.length/studentsPerPage);
   $('ul').after('<div class="pagination"></div>');
+  ul = '<ul>';
   for (let i = 1; i <= totalPages; i++) {
     let tempVar ='<li><a href="#">' + i + '</a></li>';
     ul = ul + tempVar;
@@ -43,6 +44,7 @@ function studentSearch () {
    let search = document.getElementById('search').value.toLowerCase();
    $('.pagination').remove();
    document.getElementById('search').value = '';
+   matchedStudents = [];
    for (var i = 0; i < studentList.length; i++) {
      name = studentNames[i].textContent;
       email = studentEmails[i].textContent;
@@ -54,10 +56,13 @@ function studentSearch () {
    console.log(matchedStudents);
    if (matchedStudents.length == 0) {
      $(studentList).hide();
-     $('.student-list').after('<h4> Error: Search Not Found! </h4><p>Either the student searched for does not exist in the database or the search criteria was misspelled. Please try again.</p>');
+     $('.error').remove();
+     $('.student-list').after('<h4 class="error"> Error: Search Not Found! </h4><p class="error">Either the student searched for does not exist in the database or the search criteria was misspelled. Please try again.</p>');
   } else if (matchedStudents.length < 10 && matchedStudents.length > 0) {
      showPage(1, matchedStudents);
+     $('.error').remove();
  } else {
+   $('.error').remove();
    showPage(1, matchedStudents);
    appendPageLinks(matchedStudents);
  }
