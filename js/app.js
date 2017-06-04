@@ -7,9 +7,10 @@ let ul = '<ul>';
 let studentNames = $('h3');
 let studentEmails = $('.email');
 let matchedStudents = [];
+let searchList = [];
 
 //add search bar
-$('h2').after('<div class="student-search"> <input id="search" placeholder="Search for students..."> <button>Search</button> </div>');
+$('h2').after('<div class="student-search" id="the-basics"> <input id="search" placeholder="Search for students..." type="text" class="typeahead"> <button>Search</button> </div>');
 
 //determine which students should appear on which page using the amount of studentsPerPage and the page clicked by user.
 function showPage (x, y) {
@@ -71,6 +72,48 @@ function studentSearch () {
    appendPageLinks(matchedStudents);
  }
 }
+
+//typeahead.js
+
+
+var substringMatcher = function(strs) {
+  return function findMatches(q, cb) {
+    var matches, substringRegex;
+
+    // an array that will be populated with substring matches
+    matches = [];
+
+    // regex used to determine if a string contains the substring `q`
+    substrRegex = new RegExp(q, 'i');
+
+    // iterate through the pool of strings and for any string that
+    // contains the substring `q`, add it to the `matches` array
+    $.each(strs, function(i, str) {
+      if (substrRegex.test(str)) {
+        matches.push(str);
+      }
+    });
+
+    cb(matches);
+  };
+};
+
+for (var i = 0; i < studentList.length; i++) {
+    name = studentNames[i].textContent;
+    email = studentEmails[i].textContent;
+    searchList.push(name);
+    searchList.push(email);
+}
+
+$('#the-basics .typeahead').typeahead({
+  hint: true,
+  highlight: true,
+  minLength: 1
+},
+{
+  name: 'searchList',
+  source: substringMatcher(searchList)
+});
 
 //Functions to call that are required to set the page up once loaded.
 showPage(1, studentList);
